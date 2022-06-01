@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
-class DishDeatail extends Component {
+class DishDetail extends Component {
   renderDish(dish) {
     return (
       <div className="col-12 col-md-5 m-1">
@@ -26,7 +26,12 @@ class DishDeatail extends Component {
                 <li key={comment.id}>
                   <p>{comment.comment}</p>
                   <p>
-                    -- {comment.author}, {comment.date}
+                    -- {comment.author},{" "}
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                    }).format(new Date(Date.parse(comment.date)))}
                   </p>
                 </li>
               );
@@ -55,4 +60,4 @@ class DishDeatail extends Component {
   }
 }
 
-export default DishDeatail;
+export default DishDetail;
