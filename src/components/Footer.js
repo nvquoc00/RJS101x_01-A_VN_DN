@@ -9,16 +9,16 @@ function Footer(props) {
             <h5>Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="nhanvien.js">Nhân viên</a>
+                <a href="nhanvien">Nhân viên</a>
               </li>
               <li>
-                <a href="phongban.js">Phòng ban</a>
+                <a href="phongban">Phòng ban</a>
               </li>
               <li>
-                <a href="bangluong.js">Bảng lương</a>
+                <a href="bangluong">Bảng lương</a>
               </li>
               <li>
-                <a href="lienhe.html">Liên hệ</a>
+                <a href="lienhe">Liên hệ</a>
               </li>
             </ul>
           </div>

@@ -10,14 +10,8 @@
   min-height: 400px;
 }
 
-.header {
-  background-color: #2a6f97;
-  margin: 0px auto;
-  padding: 20px 0px 20px 0px;
-}
-
 .footer {
-  background-color: #95d5b2;
+  background-color: #edf2f4;
   margin: 0px auto;
   padding: 20px 0px 20px 0px;
 }
