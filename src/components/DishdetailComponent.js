@@ -14,7 +14,7 @@ function RenderDish(dish) {
   return (
     <div className="col-12 col-md-5 m-1">
       <Card>
-        <CardImg width="100%" src={dish.image} value={dish.name} />
+        <CardImg top src={dish.image} alt={dish.name} />
         <CardBody>
           <CardText>{dish.name}</CardText>
           <CardTitle>{dish.description}</CardTitle>
