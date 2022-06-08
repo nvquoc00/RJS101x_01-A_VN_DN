@@ -6,7 +6,6 @@ import {
   NavbarToggler,
   Collapse,
   NavItem,
-  Jumbotron,
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
@@ -28,7 +27,7 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Navbar className="light" light expand="md">
+        <Navbar className="dark" dark expand="md">
           <div className="container">
             <NavbarToggler onClick={this.toggleNav} />
             <NavbarBrand className="mr-auto" href="/">

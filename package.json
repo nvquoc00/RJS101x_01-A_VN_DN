@@ -8,6 +8,7 @@
     "dateformat": "^5.0.2",
     "font-awesome": "^4.7.0",
     "prop-types": "^15.8.1",
+    "react-number-format": "^4.9.3",
     "react-popper": "^2.2.5",
     "react-redux": "^7.2.6",
     "react-redux-form": "^1.16.14",
