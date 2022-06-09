@@ -4,9 +4,11 @@ import StaffList from "./StaffList";
 import StaffDetail from "./StaffDetail";
 import Department from "./Department";
 import Salary from "./Salary";
+import Contact from "./Contact";
 import Footer from "./Footer";
 import { Routes, Route } from "react-router-dom";
 import { DEPARTMENTS, STAFFS } from "../data/staffs";
+
 function Main() {
   const [staff, setStaff] = useState({
     staffs: STAFFS,
@@ -28,13 +30,16 @@ function Main() {
     <div>
       <Header />
       <Routes>
-        <Route path="/nhanvien" element={<StaffList staffs={staff.staffs} />} />
-        <Route path="/nhanvien/:staffId" element={StaffWithId} />
+        <Route path="/" element={<StaffList staffs={staff.staffs} />} />
+        <Route path="nhanvien" element={<StaffList staffs={staff.staffs} />}>
+          <Route path=":staffId" element={StaffWithId} />
+        </Route>
         <Route
-          path="/phongban"
+          path="phongban"
           element={<Department dept={staff.departments} />}
         />
-        <Route path="/bangluong" element={<Salary salary={staff.staffs} />} />
+        <Route path="bangluong" element={<Salary salary={staff.staffs} />} />
+        <Route path="lienhe" element={<Contact />} />
       </Routes>
       <Footer />
     </div>
