@@ -6,7 +6,7 @@ import Department from "./Department";
 import Salary from "./Salary";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { DEPARTMENTS, STAFFS } from "../data/staffs";
 
 function Main() {
@@ -15,12 +15,13 @@ function Main() {
     departments: DEPARTMENTS,
   });
 
-  const StaffWithId = ({ match }) => {
+  const StaffWithId = () => {
+    const params = useParams();
     return (
       <StaffDetail
         staff={
           staff.staffs.filter(
-            (item) => item.id === parseInt(match.params.staffId, 10)
+            (item) => item.id === parseInt(params.staffId, 10)
           )[0]
         }
       />
@@ -31,9 +32,11 @@ function Main() {
       <Header />
       <Routes>
         <Route path="/" element={<StaffList staffs={staff.staffs} />} />
-        <Route path="nhanvien" element={<StaffList staffs={staff.staffs} />}>
-          <Route path=":staffId" element={StaffWithId} />
-        </Route>
+        <Route
+          path="/nhanvien"
+          element={<StaffList staffs={staff.staffs} />}
+        ></Route>
+        <Route path="/nhanvien/:staffId" element={<StaffWithId />} />
         <Route
           path="phongban"
           element={<Department dept={staff.departments} />}
