@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import Home from "./Home";
 import StaffList from "./StaffList";
 import StaffDetail from "./StaffDetail";
 import Department from "./Department";
@@ -31,7 +32,7 @@ function Main() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={<StaffList staffs={staff.staffs} />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/nhanvien"
           element={<StaffList staffs={staff.staffs} />}

@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { Card, CardTitle, CardBody, CardText } from "reactstrap";
-
+import {
+  Card,
+  CardTitle,
+  CardBody,
+  CardText,
+  Breadcrumb,
+  BreadcrumbItem,
+} from "reactstrap";
+import { Link } from "react-router-dom";
 class RenderDept extends Component {
   render() {
     return (
@@ -25,6 +32,18 @@ function Department(props) {
   });
   return (
     <div className="container">
+      <div className="row">
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/nhanvien">Nhân viên</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>Phòng ban</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="col-12">
+          <h3>Phòng ban</h3>
+          <hr />
+        </div>
+      </div>
       <div className="row shadow m-3">{departments}</div>
     </div>
   );
