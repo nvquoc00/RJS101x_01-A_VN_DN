@@ -9,7 +9,7 @@ import { DISHES } from "../shared/dishes";
 import { COMMENTS } from "../shared/comments";
 import { PROMOTIONS } from "../shared/promotions";
 import { LEADERS } from "../shared/leaders";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
@@ -52,17 +52,15 @@ class Main extends Component {
     return (
       <div>
         <Header />
-        <Switch>
-          <Route path="/home" component={HomePage} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route
-            exact
             path="/menu"
-            component={() => <Menu dishes={this.state.dishes} />}
-          />
-          <Route path="/menu/:dishId" component={DishWithId} />
-          <Route exact path="/contactus" component={Contact} />
-          <Redirect to="/home" />
-        </Switch>
+            element={<Menu dishes={this.state.dishes} />}
+          ></Route>
+          <Route path="/menu/:dishId" element={<DishWithId />} />
+          <Route path="contactus" element={<Contact />} />
+        </Routes>
         <Footer />
       </div>
     );
