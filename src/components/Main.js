@@ -7,15 +7,28 @@ import Department from "./Department";
 import Salary from "./Salary";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import { Switch, Route, Redirect, useParams } from "react-router-dom";
-import { DEPARTMENTS, STAFFS } from "../data/staffs";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useParams,
+  withRouter,
+} from "react-router-dom";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    staffs: state.staffs,
+    departments: state.departments,
+  };
+};
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffs: STAFFS,
-      departments: DEPARTMENTS,
+      staffs: this.props.staffs,
+      departments: this.props.departments,
     };
     this.addStaff = this.addStaff.bind(this);
   }
@@ -76,4 +89,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
