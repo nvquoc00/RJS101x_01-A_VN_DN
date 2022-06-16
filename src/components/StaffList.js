@@ -20,6 +20,7 @@ function RenderStaffItem({ staff, onClick }) {
 }
 
 function StaffList(props) {
+  console.log(props);
   const staffList = props.staffs.map((staff) => {
     return (
       <div className="col-6 col-md-4 col-lg-2 mt-2 mb-2" key={staff.id}>
