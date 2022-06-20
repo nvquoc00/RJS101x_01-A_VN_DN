@@ -43,7 +43,11 @@ function Salary(props) {
 
   const salaryOfStaff = props.salary
     .sort((a, b) =>
-      sortSalary ? a.salaryScale - b.salaryScale : b.salaryScale - a.salaryScale
+      sortSalary
+        ? (a.salaryScale * luongCb + a.overTime * luongGio).toFixed(0) -
+          (b.salaryScale * luongCb + b.overTime * luongGio).toFixed(0)
+        : (b.salaryScale * luongCb + b.overTime * luongGio).toFixed(0) -
+          (a.salaryScale * luongCb + a.overTime * luongGio).toFixed(0)
     )
     .map((salary) => {
       return (
@@ -68,7 +72,7 @@ function Salary(props) {
         className="btn btn-danger"
         onClick={() => setSortSalary(!sortSalary)}
       >
-        Sắp xếp theo Hệ số lương
+        Sắp xếp theo số lương
       </button>
       <div className="row shadow mb-3">{salaryOfStaff}</div>
     </div>

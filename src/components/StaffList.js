@@ -35,10 +35,10 @@ function StaffList(props) {
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Menu</BreadcrumbItem>
+          <BreadcrumbItem active>Nhân viên</BreadcrumbItem>
         </Breadcrumb>
         <div className="col-12">
-          <h3>Menu</h3>
+          <h3>Nhân viên</h3>
           <hr />
         </div>
       </div>
