@@ -9,32 +9,42 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
+import { FadeTransform } from "react-animation-components";
 
 const luongCb = 3000000;
 const luongGio = 200000 / 8;
 
 function RenderSalary({ salary, colorSalary }) {
   return (
-    <Card>
-      <CardTitle className="p-3 bg-white rounded m-2">{salary.name}</CardTitle>
-      <CardBody>
-        <CardText>Mã nhân viên: {salary.id}</CardText>
-        <CardText>Hệ số lương: {salary.salaryScale}</CardText>
-        <CardText>Số giờ làm thêm: {salary.overTime}</CardText>
-        <CardText className="bg-light p-2 shadow">
-          Lương:{" "}
-          <NumberFormat
-            value={(
-              salary.salaryScale * luongCb +
-              salary.overTime * luongGio
-            ).toFixed(0)}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"VNĐ "}
-          />
-        </CardText>
-      </CardBody>
-    </Card>
+    <FadeTransform
+      in
+      transformProps={{
+        exitTransform: "scale(0.5) translateY(-50%)",
+      }}
+    >
+      <Card>
+        <CardTitle className="p-3 bg-white rounded m-2">
+          {salary.name}
+        </CardTitle>
+        <CardBody>
+          <CardText>Mã nhân viên: {salary.id}</CardText>
+          <CardText>Hệ số lương: {salary.salaryScale}</CardText>
+          <CardText>Số giờ làm thêm: {salary.overTime}</CardText>
+          <CardText className="bg-light p-2 shadow">
+            Lương:{" "}
+            <NumberFormat
+              value={(
+                salary.salaryScale * luongCb +
+                salary.overTime * luongGio
+              ).toFixed(0)}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"VNĐ "}
+            />
+          </CardText>
+        </CardBody>
+      </Card>
+    </FadeTransform>
   );
 }
 
@@ -43,7 +53,13 @@ function Salary(props) {
 
   const salaryOfStaff = props.salary
     .sort((a, b) =>
-      sortSalary ? a.salaryScale - b.salaryScale : b.salaryScale - a.salaryScale
+      sortSalary
+        ? a.salaryScale * luongCb +
+          a.overTime * luongGio -
+          (b.salaryScale * luongCb + b.overTime * luongGio)
+        : b.salaryScale * luongCb +
+          b.overTime * luongGio -
+          (a.salaryScale * luongCb + a.overTime * luongGio)
     )
     .map((salary) => {
       return (

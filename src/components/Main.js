@@ -4,6 +4,7 @@ import Home from "./Home";
 import StaffList from "./StaffList";
 import StaffDetail from "./StaffDetail";
 import Department from "./Department";
+import DepartmentDetail from "./DepartmentDetail";
 import Salary from "./Salary";
 import Contact from "./Contact";
 import Footer from "./Footer";
@@ -11,82 +12,135 @@ import {
   Switch,
   Route,
   Redirect,
-  useParams,
   withRouter,
+  useHistory,
 } from "react-router-dom";
+import {
+  addStaff,
+  fetchStaffs,
+  fetchDepartments,
+  fetchStaffsSalary,
+  deleteStaff,
+  updateStaff,
+} from "../redux/ActionCreators";
 import { connect } from "react-redux";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
+export const history = useHistory;
 
 const mapStateToProps = (state) => {
   return {
     staffs: state.staffs,
     departments: state.departments,
+    staffsSalary: state.staffsSalary,
   };
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  addStaff: (staff) => {
+    dispatch(addStaff(staff));
+  },
+  fetchStaffs: () => {
+    dispatch(fetchStaffs());
+  },
+  fetchDepartments: () => {
+    dispatch(fetchDepartments());
+  },
+  fetchStaffsSalary: () => {
+    dispatch(fetchStaffsSalary());
+  },
+  deleteStaff: (id) => {
+    dispatch(deleteStaff(id));
+  },
+  updateStaff: (staff) => {
+    dispatch(updateStaff(staff));
+  },
+});
+
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      staffs: this.props.staffs,
-      departments: this.props.departments,
-    };
-    this.addStaff = this.addStaff.bind(this);
+  componentDidMount() {
+    this.props.fetchStaffs();
+    this.props.fetchDepartments();
+    this.props.fetchStaffsSalary();
   }
 
-  addStaff = (staff) => {
-    const id = Math.floor(Math.random() * 10000 + 1);
-    const newStaff = { id, ...staff };
-    this.setState({
-      staffs: [...this.state.staffs, newStaff],
-    });
-    console.log(newStaff);
-    console.log(this.state.staffs);
-  };
-
-  StaffWithId = () => {
-    const params = useParams();
-    return (
-      <StaffDetail
-        staff={
-          this.state.staffs.filter(
-            (item) => item.id === parseInt(params.staffId, 10)
-          )[0]
-        }
-      />
-    );
-  };
-
   render() {
+    const StaffWithId = ({ match }) => {
+      return (
+        <StaffDetail
+          staff={
+            this.props.staffs.staffs.filter(
+              (staff) => staff.id === parseInt(match.params.staffId, 10)
+            )[0]
+          }
+          dept={this.props.departments.departments}
+          onUpdateStaff={this.props.updateStaff}
+        />
+      );
+    };
+    const StaffWithDept = ({ match }) => {
+      return (
+        <DepartmentDetail
+          dept={
+            this.props.departments.departments.filter(
+              (dept) => dept.id === match.params.deptId
+            )[0]
+          }
+          staff={this.props.staffs.staffs.filter(
+            (staff) => staff.departmentId === match.params.deptId
+          )}
+        />
+      );
+    };
+
     return (
       <div>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route
-            exact
-            path="/nhanvien"
-            component={() => (
-              <StaffList onAdd={this.addStaff} staffs={this.state.staffs} />
-            )}
-          ></Route>
-          <Route path="/nhanvien/:staffId" component={this.StaffWithId} />
-          <Route
-            exact
-            path="/phongban"
-            component={() => <Department dept={this.state.departments} />}
-          />
-          <Route
-            exact
-            path="/bangluong"
-            component={() => <Salary salary={this.state.staffs} />}
-          />
-          <Route exact path="/lienhe" component={Contact} />
-          <Redirect to="/" />
-        </Switch>
+        <TransitionGroup>
+          <CSSTransition
+            key={this.props.location.key}
+            classNames="page"
+            timeout={300}
+          >
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/staff/:staffId" component={StaffWithId} />
+              <Route path="/departments/:deptId" component={StaffWithDept} />
+              <Route
+                path="/staff"
+                component={() => (
+                  <StaffList
+                    staffsLoading={this.props.staffs.isLoading}
+                    onAddStaff={this.props.addStaff}
+                    staffs={this.props.staffs.staffs}
+                    onDeleteStaff={this.props.deleteStaff}
+                  />
+                )}
+              />
+              <Route
+                path="/salary"
+                component={() => (
+                  <Salary salary={this.props.staffsSalary.staffsSalary} />
+                )}
+              />
+              <Route
+                path="/departments"
+                component={() => (
+                  <Department
+                    departments={this.props.departments.departments}
+                    staffs={this.props.staffs.staffs}
+                  />
+                )}
+              />
+              <Route path="/contact" component={Contact} />
+              <Redirect to="/" />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
         <Footer />
       </div>
     );
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
